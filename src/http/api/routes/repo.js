@@ -13,5 +13,13 @@ module.exports = (server) => {
     }
   })
 
+  api.route({
+    method: '*',
+    path: '/api/v0/repo/stat',
+    config: {
+      handler: resources.repo.stat
+    }
+  })
+
   // TODO: implement the missing spec https://github.com/ipfs/interface-ipfs-core/blob/master/SPEC/REPO.md
 }

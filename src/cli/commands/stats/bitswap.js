@@ -11,27 +11,27 @@ module.exports = {
   builder: {},
 
   handler (argv) {
-    argv.ipfs.bitswap.stat((err, stats) => {
+    argv.ipfs.stats.bitswap((err, stats) => {
       if (err) {
         throw err
       }
 
-      stats.Wantlist = stats.Wantlist || []
-      stats.Wantlist = stats.Wantlist.map((entry) => {
+      stats.wantlist = stats.wantlist || []
+      stats.wantlist = stats.wantlist.map((entry) => {
         const buf = Buffer.from(entry.cid.hash.data)
         const cid = new CID(entry.cid.version, entry.cid.codec, buf)
         return cid.toBaseEncodedString()
       })
-      stats.Peers = stats.Peers || []
+      stats.peers = stats.peers || []
 
       print(`bitswap status
-  blocks received: ${stats.BlocksReceived}
-  dup blocks received: ${stats.DupBlksReceived}
-  dup data received: ${stats.DupDataReceived}B
-  wantlist [${stats.Wantlist.length} keys]
-    ${stats.Wantlist.join('\n    ')}
-  partners [${stats.Peers.length}]
-    ${stats.Peers.join('\n    ')}`)
+  blocks received: ${stats.blocksReceived}
+  dup blocks received: ${stats.dupBlksReceived}
+  dup data received: ${stats.dupDataReceived}B
+  wantlist [${stats.wantlist.length} keys]
+    ${stats.wantlist.join('\n    ')}
+  partners [${stats.peers.length}]
+    ${stats.peers.join('\n    ')}`)
     })
   }
 }
