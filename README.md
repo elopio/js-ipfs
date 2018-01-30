@@ -252,11 +252,6 @@ A complete API definition is in the works. Meanwhile, you can learn how to you u
   - [`ipfs.block.put(block, cid, [callback])`](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/BLOCK.md#put)
   - [`ipfs.block.stat(cid, [callback])`](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/BLOCK.md#stat)
 
-- [repo](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/)
-  - `ipfs.repo.init`
-  - `ipfs.repo.version`
-  - `ipfs.repo.gc` (not implemented, yet!)
-
 #### `Graph`
 
 - [dag](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/DAG.md)
@@ -330,6 +325,17 @@ A complete API definition is in the works. Meanwhile, you can learn how to you u
   - `ipfs.start([callback])`
   - `ipfs.stop([callback])`
   - `ipfs.isOnline()`
+
+- [repo](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/REPO.md)
+  - `ipfs.repo.init`
+  - [`ipfs.repo.stat([options, callback])`](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/REPO.md#stat)
+  - [`ipfs.repo.version([callback])`](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/REPO.md#version)
+  - `ipfs.repo.gc([options, callback])` (not implemented, yet!)
+
+- [stats](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/STATS.md)
+  - [`ipfs.stats.bitswap([callback])`](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/STATS.md#bitswap)
+  - [`ipfs.stats.bw([options, callback])`](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/STATS.md#bw)
+  - [`ipfs.stats.repo([options, callback])`](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/STATS.md#repo)
   
 - [config](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/CONFIG.md)
   - [`ipfs.config.get([key, callback])`](https://github.com/ipfs/interface-ipfs-core/tree/master/SPEC/CONFIG.md#configget)
