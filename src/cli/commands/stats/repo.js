@@ -7,10 +7,15 @@ module.exports = {
 
   describe: 'Get stats for the currently used repo',
 
-  builder: {},
+  builder: {
+    human: {
+      type: 'boolean',
+      default: false
+    }
+  },
 
   handler (argv) {
-    argv.ipfs.stats.repo((err, stats) => {
+    argv.ipfs.stats.repo({human: argv.human}, (err, stats) => {
       if (err) {
         throw err
       }

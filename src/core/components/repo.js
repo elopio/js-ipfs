@@ -12,22 +12,10 @@ module.exports = function repo (self) {
       self._repo.version.get(callback)
     }),
 
-    gc: function () {},
+    gc: () => {},
 
     stat: promisify((options, callback) => {
-      if (typeof options === 'function') {
-        callback = options
-        options = {}
-      }
-
-      // TODO: this!
-      callback(null, {
-        numObjects: 0,
-        repoSize: 0,
-        repoPath: 0,
-        version: 0,
-        storageMax: 0
-      })
+      self._repo.stat(options, callback)
     }),
 
     path: () => self._repo.path
