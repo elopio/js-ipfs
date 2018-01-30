@@ -17,6 +17,7 @@ module.exports = function bitswap (self) {
       const list = self._bitswap.getWantlist()
       return formatWantlist(list)
     },
+
     stat: promisify((callback) => {
       if (!self.isOnline()) {
         callback(new Error(OFFLINE_ERROR))
@@ -36,6 +37,7 @@ module.exports = function bitswap (self) {
         dataSent: snapshot.dataSent
       })
     }),
+
     unwant: (key) => {
       if (!self.isOnline()) {
         throw new Error(OFFLINE_ERROR)
