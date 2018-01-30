@@ -10,11 +10,12 @@ module.exports = {
   builder: {},
 
   handler (argv) {
-    argv.ipfs.repo.version(function (err, version) {
+    argv.ipfs.repo.version((err, data) => {
       if (err) {
         throw err
       }
-      print(version)
+
+      print(data.Version)
     })
   }
 }
