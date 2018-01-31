@@ -2,6 +2,7 @@
 
 const promisify = require('promisify-es6')
 const Readable = require('readable-stream').Readable
+const toMilliseconds = require('human-to-milliseconds')
 
 function bandwidthStats (self, options) {
   let stats
@@ -46,22 +47,28 @@ module.exports = function stats (self) {
       }, options)
 
       if (options.poll) {
-        let stream = new Readable({ objectMode: true })
-        let interval
+        toMilliseconds(options.interval, (err, time) => {
+          if (err) {
+            return callback(err)
+          }
 
-        stream._read = (size) => {}
-
-        const stop = () => clearInterval(interval)
-
-        stream.on('end', stop)
-        stream.on('close', stop)
-        stream.on('error', stop)
-
-        interval = setInterval(() => {
-          stream.push(bandwidthStats(self, stats))
-        }, 1000) // TODO: use interval here
-
-        callback(null, stream)
+          let stream = new Readable({ objectMode: true })
+          let interval
+  
+          stream._read = (size) => {}
+  
+          const stop = () => clearInterval(interval)
+  
+          stream.on('end', stop)
+          stream.on('close', stop)
+          stream.on('error', stop)
+  
+          interval = setInterval(() => {
+            stream.push(bandwidthStats(self, stats))
+          }, time)
+  
+          callback(null, stream)
+        })
       } else {
         callback(null, bandwidthStats(self, stats))
       }

@@ -25,7 +25,7 @@ exports.bw = (request, reply) => {
     peer: request.query.peer,
     proto: request.query.proto,
     poll: request.query.poll === 'true',
-    interval: request.query.interval
+    interval: request.query.interval || '1s'
   }
 
   ipfs.stats.bw(options, (err, res) => {
