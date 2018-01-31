@@ -1,6 +1,15 @@
 'use strict'
 
-const Readable = require('readable-stream').Readable
+const { Transform, Readable } = require('readable-stream')
+
+const transformBandwidth = (stat) => {
+  return {
+    TotalIn: stat.totalIn,
+    TotalOut: stat.totalOut,
+    RateIn: stat.rateIn,
+    RateOut: stat.rateOut,
+  }
+}
 
 exports = module.exports
 
@@ -19,7 +28,7 @@ exports.bw = (request, reply) => {
     interval: request.query.interval
   }
 
-  ipfs.stats.bw(options, (err, stat) => {
+  ipfs.stats.bw(options, (err, res) => {
     if (err) {
       return reply({
         Message: err.toString(),
@@ -27,12 +36,25 @@ exports.bw = (request, reply) => {
       }).code(500)
     }
 
-    reply({
-      TotalIn: stat.totalIn,
-      TotalOut: stat.totalOut,
-      RateIn: stat.rateIn,
-      RateOut: stat.rateOut,
-    })
+    if (options.poll) {
+      const output = new Transform({
+        objectMode: true,
+        transform (chunk, encoding, cb) {
+          this.push(JSON.stringify(transformBandwidth(chunk)) + '\n')
+          cb()
+        }
+      })
+
+      request.on('disconnect', () => {
+        res.destroy()
+      })
+
+      res.pipe(output)
+      reply(new Readable().wrap(output))
+        .header('x-chunked-output', '1')
+    } else {
+      reply(transformBandwidth(res))
+    }
   })
 }
 

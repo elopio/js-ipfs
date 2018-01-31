@@ -25,10 +25,6 @@ module.exports = (server) => {
     method: '*',
     path: '/api/v0/stats/bw',
     config: {
-      payload: {
-        output: 'stream',
-        parse: false
-      },
       handler: resources.stats.bw
     }
   })
